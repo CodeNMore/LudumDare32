@@ -11,8 +11,9 @@ public class Tile {
 	
 	public static Tile[] tiles = new Tile[4];
 	public static Tile voidTile = new Tile(Assets.getRegion("color"), false, (byte) 0);
-	public static Tile grassTile = new Tile(Assets.getRegion("grass"), false, (byte) 1);
+	public static Tile grassTile = new Tile(Assets.getRegion("grass"), false, (byte) 3);
 	public static Tile stoneWallTile = new Tile(Assets.getRegion("stone"), true, (byte) 2);
+	public static Tile dirtTile = new Tile(Assets.getRegion("dirt"), false, (byte) 1);
 	
 	//CLASS
 	

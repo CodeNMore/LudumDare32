@@ -6,6 +6,7 @@ public class PointLight {
 
 	private float[] position;
 	private float[] color;
+	private float[] minMax;
 	private int intensity;
 	private int showness;
 	
@@ -19,8 +20,19 @@ public class PointLight {
 		color[1] = 1.0f;
 		color[2] = 1.0f;
 		
+		minMax = new float[4];
+		minMax[0] = 0;
+		minMax[1] = 0;
+		minMax[2] = 0;
+		minMax[3] = 0;
+		
 		this.showness = showness;
 		this.intensity = intensity;
+	}
+	
+	public void setPosition(float x, float y){
+		position[0] = x;
+		position[1] = y;
 	}
 	
 	public void setX(int x){
@@ -39,6 +51,14 @@ public class PointLight {
 		position[1] += y;
 	}
 	
+	public float getX(){
+		return position[0];
+	}
+	
+	public float getY(){
+		return position[1];
+	}
+	
 	public int getShowness(){
 		return showness;
 	}
@@ -51,6 +71,16 @@ public class PointLight {
 		return intensity;
 	}
 	
+	public float[] getMinMax(){
+		return minMax;
+	}
+	
+	public void setMinMax(float xmin, float xmax, float ymin, float ymax){
+		minMax[0] = xmin;
+		minMax[1] = xmax;
+		minMax[2] = ymin;
+		minMax[3] = ymax;
+	}
 	public void setIntensity(int intensity){
 		this.intensity = intensity;
 	}

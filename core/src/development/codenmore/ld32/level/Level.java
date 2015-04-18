@@ -4,8 +4,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import development.codenmore.ld32.Main;
 import development.codenmore.ld32.assets.Shaders;
-import development.codenmore.ld32.assets.lighting.PointLight;
+import development.codenmore.ld32.assets.lighting.LightManager;
 import development.codenmore.ld32.entities.EntityManager;
+import development.codenmore.ld32.entities.LightPost;
+import development.codenmore.ld32.entities.Zombie;
+import development.codenmore.ld32.items.Flashlight;
+import development.codenmore.ld32.items.Lazer;
+import development.codenmore.ld32.items.Radio;
 import development.codenmore.ld32.level.tiles.Tile;
 import development.codenmore.ld32.utils.Utils;
 
@@ -15,22 +20,18 @@ public class Level {
 	private int width, height;
 	private EntityManager manager;
 	
-	private PointLight light;
-	
 	public Level(String path){
-		load(path);
 		manager = new EntityManager(this);
-		
-		light = new PointLight(200, 200, 100, 40);
+		load(path);
 	}
 	
 	public void tick(float delta){
-		setupLights();
+		LightManager.tick(delta);
 		manager.tick(delta);
 	}
 	
 	public void render(SpriteBatch batch){
-		batch.setShader(Shaders.tile);
+		batch.setShader(Shaders.world);
 		int x0 = (int) Math.max(0, (GameCamera.getX() - Main.WIDTH / 2) / Tile.TILEWIDTH);
 		int x1 = (int) Math.min(width, GameCamera.getX() / Tile.TILEWIDTH + (Main.WIDTH / 2 / Tile.TILEWIDTH) + 2);
 		int y0 = (int) Math.max(0, (GameCamera.getY() - Main.HEIGHT / 2) / Tile.TILEHEIGHT);
@@ -46,17 +47,6 @@ public class Level {
 		manager.render(batch);
 	}
 	
-	private void setupLights(){
-		Shaders.tile.begin();
-		{
-			Shaders.tile.setUniform2fv("lightPosition", light.getPosition(), 0, 2);
-			Shaders.tile.setUniform3fv("lightColor", light.getColor(), 0, 3);
-			Shaders.tile.setUniformi("lightIntensity", light.getIntensity());
-			Shaders.tile.setUniformi("lightShowness", light.getShowness());
-		}
-		Shaders.tile.end();
-	}
-	
 	public Tile getTile(int x, int y){
 		if(x >= width || x < 0 || y < 0 || y >= height)
 			return Tile.voidTile;
@@ -68,9 +58,30 @@ public class Level {
 		width = Integer.parseInt(tokens[0]);
 		height = Integer.parseInt(tokens[1]);
 		tiles = new byte[width * height];
-		for(int i = 0;i < width * height;++i){
-			tiles[i] = Byte.parseByte(tokens[i + 2]);
+		LightManager.reset();
+		for(int y = 0;y < height;++y){
+			for(int x = 0;x < width;++x){
+				if(tokens[(x + y * width) + 2].length() > 1){
+					tiles[x + y * width] = Byte.parseByte(tokens[(x + y * width) + 2].substring(0, 1));
+					if(tokens[(x + y * width) + 2].charAt(1) == 'L'){
+						manager.addEntity(new LightPost(this, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT));
+					}
+				}else{
+					tiles[x + y * width] = Byte.parseByte(tokens[(x + y * width) + 2]);
+				}
+			}
 		}
+		
+		manager.getPlayer().getInventory().clear();
+		manager.getPlayer().getInventory().addItem(new Flashlight(this, 0, 0));
+		manager.getPlayer().getInventory().addItem(new Lazer(this, 0, 0));
+		manager.getPlayer().getInventory().addItem(new Radio(this, 0, 0));
+		
+		manager.addEntity(new Zombie(this, 200, 100));
+	}
+	
+	public EntityManager getEntityManager(){
+		return manager;
 	}
 
 }

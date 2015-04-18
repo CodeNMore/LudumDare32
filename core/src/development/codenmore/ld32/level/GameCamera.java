@@ -7,13 +7,14 @@ import development.codenmore.ld32.entities.Entity;
 
 public class GameCamera {
 	
-	private static OrthographicCamera cam;
+	private static OrthographicCamera cam, hudCam;
 	private static float x, y;
 	
 	private GameCamera(){}
 	
-	public static void init(OrthographicCamera cam){
+	public static void init(OrthographicCamera cam, OrthographicCamera hudCam){
 		GameCamera.cam = cam;
+		GameCamera.hudCam = hudCam;
 	}
 	
 	public static void reset(){
@@ -34,6 +35,14 @@ public class GameCamera {
 	
 	public static float getY(){
 		return y;
+	}
+	
+	public static OrthographicCamera getHudCam(){
+		return hudCam;
+	}
+	
+	public static OrthographicCamera getCam(){
+		return cam;
 	}
 
 }

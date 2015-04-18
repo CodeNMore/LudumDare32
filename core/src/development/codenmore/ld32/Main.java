@@ -22,7 +22,7 @@ public class Main extends ApplicationAdapter {
 	public static final String TITLE = "Light'em Up!";
 	//Rendering
 	private SpriteBatch batch;
-	private OrthographicCamera cam;
+	private OrthographicCamera cam, hudCam;
 	private Viewport viewport;
 	private FPSLogger fpsl;
 	
@@ -33,13 +33,15 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		cam = new OrthographicCamera(WIDTH, HEIGHT);
 		cam.position.set(WIDTH / 2, HEIGHT / 2, 0);
+		hudCam = new OrthographicCamera(WIDTH, HEIGHT);
+		hudCam.position.set(WIDTH / 2, HEIGHT / 2, 0);
 		viewport = new FitViewport(WIDTH, HEIGHT, cam);
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		//Input Managers
 		InputManager.setCam(cam);
 		InputManager.setViewport(viewport);
 		//Cam
-		GameCamera.init(cam);
+		GameCamera.init(cam, hudCam);
 		//Shaders
 		Shaders.init();
 		//Assets
@@ -52,6 +54,7 @@ public class Main extends ApplicationAdapter {
 	public void render(){
 		//Reset
 		cam.update();
+		hudCam.update();
 		batch.setProjectionMatrix(cam.combined);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//Render

@@ -10,13 +10,13 @@ public class GameInputManager extends InputManager {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if(keycode == Keys.W || keycode == Keys.UP){
+		if(keycode == Keys.W){
 			up = true;
-		}else if(keycode == Keys.S || keycode == Keys.DOWN){
+		}else if(keycode == Keys.S){
 			down = true;
-		}else if(keycode == Keys.A || keycode == Keys.LEFT){
+		}else if(keycode == Keys.A){
 			left = true;
-		}else if(keycode == Keys.D || keycode == Keys.RIGHT){
+		}else if(keycode == Keys.D){
 			right = true;
 		}else if(keycode == Keys.SPACE){
 			action = true;
@@ -26,13 +26,13 @@ public class GameInputManager extends InputManager {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if(keycode == Keys.W || keycode == Keys.UP){
+		if(keycode == Keys.W){
 			up = false;
-		}else if(keycode == Keys.S || keycode == Keys.DOWN){
+		}else if(keycode == Keys.S){
 			down = false;
-		}else if(keycode == Keys.A || keycode == Keys.LEFT){
+		}else if(keycode == Keys.A){
 			left = false;
-		}else if(keycode == Keys.D || keycode == Keys.RIGHT){
+		}else if(keycode == Keys.D){
 			right = false;
 		}else if(keycode == Keys.SPACE){
 			action = false;

@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.width = Main.WIDTH;
 		config.height = Main.HEIGHT;
 		config.title = Main.TITLE;
-		config.resizable = true;
+		config.resizable = false;
 		
 		//DEBUG!!!!!
 		config.foregroundFPS = 30;

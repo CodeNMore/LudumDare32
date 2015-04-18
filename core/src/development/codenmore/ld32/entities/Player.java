@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import development.codenmore.ld32.assets.Assets;
+import development.codenmore.ld32.items.Inventory;
 import development.codenmore.ld32.level.GameCamera;
 import development.codenmore.ld32.level.Level;
 import development.codenmore.ld32.states.GameInputManager;
@@ -13,6 +14,7 @@ public class Player extends Entity {
 	private static TextureRegion playerUp, playerDown, playerLeft, playerRight;
 	
 	private Direction lastDir;
+	private Inventory inventory;
 
 	public Player(Level level, float x, float y) {
 		super(level, x, y, Entity.BASEWIDTH, Entity.BASEHEIGHT);
@@ -22,6 +24,10 @@ public class Player extends Entity {
 		playerRight = Assets.getRegion("playerright");
 		
 		lastDir = Direction.DOWN;
+		inventory = new Inventory(this);
+		
+		inventory.getHealthBar().fill();
+		inventory.getEnergyBar().fill();
 	}
 
 	@Override
@@ -43,8 +49,20 @@ public class Player extends Entity {
 			lastDir = Direction.DOWN;
 		}
 		move(dirX * speed * delta, dirY * speed * delta);
-		
 		GameCamera.centerOn(this);
+		
+		inventory.tick(delta);
+		if(GameInputManager.action && inventory.getCurrentSelectedItem() != null){
+			if(inventory.getEnergyBar().getFillPercent() > 0){
+				inventory.getCurrentSelectedItem().onUse(this, delta);
+			}else{
+				inventory.getCurrentSelectedItem().onNotUsed(this, delta);
+			}
+		}else{
+			inventory.getEnergyBar().incFillByPercent(0.8f * delta);
+			if(inventory.getCurrentSelectedItem() != null)
+				inventory.getCurrentSelectedItem().onNotUsed(this, delta);
+		}
 	}
 
 	@Override
@@ -63,6 +81,14 @@ public class Player extends Entity {
 			batch.draw(playerRight, x, y, width, height);
 			break;
 		}
+	}
+	
+	public Inventory getInventory(){
+		return inventory;
+	}
+	
+	public Direction getLastDir(){
+		return lastDir;
 	}
 
 }

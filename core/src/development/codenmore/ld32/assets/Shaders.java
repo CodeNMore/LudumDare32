@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 public class Shaders {
 
 	public static ShaderProgram basic;
-	public static ShaderProgram tile;
+	public static ShaderProgram world;
 	
 	private Shaders(){}
 	
@@ -14,13 +14,13 @@ public class Shaders {
 		basic = new ShaderProgram(Gdx.files.internal("shaders/basic.vert"), Gdx.files.internal("shaders/basic.frag"));
 		if (basic.isCompiled() == false) throw new IllegalArgumentException("Error compiling shader: " + basic.getLog());
 		
-		tile = new ShaderProgram(Gdx.files.internal("shaders/tile.vert"), Gdx.files.internal("shaders/tile.frag"));
-		if (tile.isCompiled() == false) throw new IllegalArgumentException("Error compiling shader: " + tile.getLog());
+		world = new ShaderProgram(Gdx.files.internal("shaders/world.vert"), Gdx.files.internal("shaders/world.frag"));
+		if (world.isCompiled() == false) throw new IllegalArgumentException("Error compiling shader: " + world.getLog());
 	}
 	
 	public static void dispose(){
 		basic.dispose();
-		tile.dispose();
+		world.dispose();
 	}
 	
 }

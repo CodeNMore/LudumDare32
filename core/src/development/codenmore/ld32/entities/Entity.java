@@ -8,11 +8,11 @@ import development.codenmore.ld32.level.tiles.Tile;
 
 public abstract class Entity {
 	
-	enum Direction {
+	public enum Direction {
 		LEFT, RIGHT, DOWN, UP
 	};
 	
-	public static final int BASEWIDTH = 32, BASEHEIGHT = 32;
+	public static final int BASEWIDTH = 25, BASEHEIGHT = 32;
 	
 	protected float x, y;
 	protected float speed;
@@ -94,6 +94,10 @@ public abstract class Entity {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	public Level getLevel(){
+		return level;
 	}
 
 }
