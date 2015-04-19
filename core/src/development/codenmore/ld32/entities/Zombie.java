@@ -14,16 +14,24 @@ public class Zombie extends Enemy{
 								zombieRight = Assets.getRegion("enemyright");
 	
 	private Direction lastDir;
+	private float findWaitTimer = 0;
 
 	public Zombie(Level level, float x, float y) {
 		super(level, x, y, BASEWIDTH, BASEHEIGHT);
 		lastDir = Direction.DOWN;
-		speed = 140;
+		speed = 90;
 	}
 
 	@Override
 	public void tick(float delta) {
-		dumbMoveToTarget(delta);
+//		dumbMoveToTarget(delta);
+		findWaitTimer += delta;
+		if(!followPath(delta)){
+			if(findWaitTimer > 1.0f){
+				findPathToTarget();
+				findWaitTimer = 0;
+			}
+		}
 	}
 
 	@Override

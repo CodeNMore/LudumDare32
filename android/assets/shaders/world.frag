@@ -36,7 +36,7 @@ void main(){
 		float att = 1.0 / dist;
 		vec4 mixedColor = vec4(att, att, att, 1.0);
 		mixedColor = mix(originalColor * vec4(lightColor[i], 1.0), mixedColor, 0.6);
-		mixedColor /= dist / lightIntensity[i];
+		mixedColor /= dist / 2 / lightIntensity[i];
 		mixedColor.w = originalColor.w;
 		
 		if(i == 0){

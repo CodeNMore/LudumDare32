@@ -17,7 +17,7 @@ public class LightPost extends Entity{
 	public LightPost(Level level, float x, float y) {
 		super(level, x + Tile.TILEWIDTH / 2 - 8, y + Tile.TILEHEIGHT / 2 - 12, 16, 64);
 		
-		light = new PointLight(x + width + 8, y + height + 8, 15, 1);
+		light = new PointLight(x + width + 8, y + height + 8, 10, 3);
 		light.setColor(1.0f, 1.0f, 1.0f);
 		LightManager.addLight(light);
 	}

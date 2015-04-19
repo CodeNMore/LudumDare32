@@ -52,7 +52,7 @@ public class Radio extends Item{
 	@Override
 	public void tick(float delta) {
 		timer += delta;
-		if(timer > lifeTime){
+		if(!collectable && timer > lifeTime){
 			alive = false;
 			for(Entity e : level.getEntityManager().getEntities()){
 				if(e instanceof Enemy){

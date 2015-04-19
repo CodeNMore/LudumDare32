@@ -14,7 +14,7 @@ public class EntityManager {
 	private Array<Item> items;
 	
 	public EntityManager(Level level){
-		player = new Player(level, 64, 64);
+		player = new Player(level, 270, 650);
 		
 		entities = new Array<Entity>();
 		items = new Array<Item>();
