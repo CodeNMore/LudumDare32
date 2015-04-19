@@ -14,7 +14,7 @@ public class DesktopLauncher {
 		config.resizable = false;
 		
 		//DEBUG!!!!!
-		config.foregroundFPS = 30;
+		config.foregroundFPS = 60;
 		
 		new LwjglApplication(new Main(), config);
 	}

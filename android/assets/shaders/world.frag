@@ -35,7 +35,7 @@ void main(){
 		float dist = distance(lightPosition[i], gl_FragCoord.xy) + lightShowness[i];
 		float att = 1.0 / dist;
 		vec4 mixedColor = vec4(att, att, att, 1.0);
-		mixedColor = mix(originalColor * vec4(lightColor[i], 1.0), mixedColor, 0.1);
+		mixedColor = mix(originalColor * vec4(lightColor[i], 1.0), mixedColor, 0.6);
 		mixedColor /= dist / lightIntensity[i];
 		mixedColor.w = originalColor.w;
 		

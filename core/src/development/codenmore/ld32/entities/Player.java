@@ -52,9 +52,9 @@ public class Player extends Entity {
 		GameCamera.centerOn(this);
 		
 		inventory.tick(delta);
-		if(GameInputManager.action && inventory.getCurrentSelectedItem() != null){
+		if(GameInputManager.actionPressed() && inventory.getCurrentSelectedItem() != null){
 			if(inventory.getEnergyBar().getFillPercent() > 0){
-				inventory.getCurrentSelectedItem().onUse(this, delta);
+				inventory.getCurrentSelectedItem().onUse(this, GameInputManager.action, delta);
 			}else{
 				inventory.getCurrentSelectedItem().onNotUsed(this, delta);
 			}
@@ -77,7 +77,7 @@ public class Player extends Entity {
 		case LEFT:
 			batch.draw(playerLeft, x, y, width, height);
 			break;
-		case RIGHT:
+		default://RIGHT
 			batch.draw(playerRight, x, y, width, height);
 			break;
 		}

@@ -28,15 +28,8 @@ public class Inventory {
 	}
 	
 	public void tick(float delta){
-		if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
-			if(getCurrentSelectedItem() != null){
-				getCurrentSelectedItem().onNotUsed(player, delta);
-			}
-			currentSelection--;
-			if(currentSelection < 0){
-				currentSelection = items.length - 1;
-			}
-		}else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
+		//Cycle if needed
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
 			if(getCurrentSelectedItem() != null){
 				getCurrentSelectedItem().onNotUsed(player, delta);
 			}
@@ -44,8 +37,16 @@ public class Inventory {
 			if(currentSelection >= items.length){
 				currentSelection = 0;
 			}
+		}else if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
+			currentSelection = 0;
+		}else if(Gdx.input.isKeyJustPressed(Keys.NUM_2)){
+			currentSelection = 1;
+		}else if(Gdx.input.isKeyJustPressed(Keys.NUM_3)){
+			currentSelection = 2;
+		}else if(Gdx.input.isKeyJustPressed(Keys.NUM_4)){
+			currentSelection = 3;
 		}
-
+		//bars
 		energyBar.tick(delta);
 		healthBar.tick(delta);
 	}

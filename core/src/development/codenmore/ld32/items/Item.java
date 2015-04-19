@@ -11,13 +11,19 @@ public abstract class Item extends Entity{
 	public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 	
 	protected String name;
+	protected boolean collectable = true;
 
 	public Item(Level level, float x, float y, int width, int height, String name) {
 		super(level, x, y, width, height);
 		this.name = name;
 	}
 	
-	public abstract void onUse(Player player, float delta);
+	public void collect(){
+		collectable = false;
+		level.getEntityManager().getPlayer().getInventory().addItem(this);
+	}
+	
+	public abstract void onUse(Player player, Direction action, float delta);
 	
 	public abstract void onNotUsed(Player player, float delta);
 	
@@ -25,6 +31,10 @@ public abstract class Item extends Entity{
 	
 	public String getName(){
 		return name;
+	}
+	
+	public boolean isCollectable(){
+		return collectable;
 	}
 
 }

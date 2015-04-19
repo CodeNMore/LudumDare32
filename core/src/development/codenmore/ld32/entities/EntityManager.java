@@ -25,10 +25,19 @@ public class EntityManager {
 		
 		for(Entity e : entities){
 			e.tick(delta);
+			if(!e.isAlive()){
+				removeEntity(e);
+			}
 		}
 		
 		for(Item i : items){
 			i.tick(delta);
+			if(i.isCollectable() && i.getBounds().overlaps(player.getBounds())){
+				i.collect();
+				removeItem(i);
+			}else if(!i.isAlive()){
+				removeItem(i);
+			}
 		}
 	}
 	
@@ -64,6 +73,14 @@ public class EntityManager {
 	
 	public Player getPlayer(){
 		return player;
+	}
+	
+	public Array<Entity> getEntities(){
+		return entities;
+	}
+	
+	public Array<Item> getItems(){
+		return items;
 	}
 
 }

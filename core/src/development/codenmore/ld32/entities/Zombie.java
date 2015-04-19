@@ -18,11 +18,12 @@ public class Zombie extends Enemy{
 	public Zombie(Level level, float x, float y) {
 		super(level, x, y, BASEWIDTH, BASEHEIGHT);
 		lastDir = Direction.DOWN;
+		speed = 140;
 	}
 
 	@Override
 	public void tick(float delta) {
-		
+		dumbMoveToTarget(delta);
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class Zombie extends Enemy{
 		case LEFT:
 			batch.draw(zombieLeft, x, y, width, height);
 			break;
-		case RIGHT:
+		default://RIGHT
 			batch.draw(zombieRight, x, y, width, height);
 			break;
 		}

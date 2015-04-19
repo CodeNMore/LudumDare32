@@ -13,7 +13,7 @@ import development.codenmore.ld32.level.Level;
 public class Flashlight extends Item {
 	
 	private static TextureRegion texture = Assets.getRegion("flashlight");
-	private static final int beamWidth = 18;
+	private static final int beamWidth = 28;
 	
 	private PointLight light;
 	private boolean mustAdd = true;
@@ -21,14 +21,14 @@ public class Flashlight extends Item {
 
 	public Flashlight(Level level, float x, float y) {
 		super(level, x, y, ITEMWIDTH, ITEMHEIGHT, "LIGHT");
-		light = new PointLight(x, y, 10, 5);
+		light = new PointLight(x, y, 30, 5);
 		light.setColor(0.3f, 0.8f, 0.8f);
 		
 		distance = Main.WIDTH / 2 + 10;
 	}
 	
 	@Override
-	public void onUse(Player player, float delta){
+	public void onUse(Player player, Direction action, float delta){
 		player.getInventory().getEnergyBar().incFillByPercent(-0.1f * delta);
 		if(mustAdd){
 			light.setPosition(player.getX() + width / 2, player.getY() + height / 2);
@@ -38,9 +38,9 @@ public class Flashlight extends Item {
 			light.setPosition(player.getX() + width / 2, player.getY() + height / 2);
 		}
 		
-		switch(player.getLastDir()){
+		switch(action){
 		case UP:
-			light.setMinMax(beamWidth, beamWidth, -8, distance);
+			light.setMinMax(beamWidth + 4, beamWidth - 4, -8, distance);
 			break;
 		case DOWN:
 			light.setMinMax(beamWidth, beamWidth, distance, 4);

@@ -9,7 +9,7 @@ import development.codenmore.ld32.level.tiles.Tile;
 public abstract class Entity {
 	
 	public enum Direction {
-		LEFT, RIGHT, DOWN, UP
+		LEFT, RIGHT, DOWN, UP, NONE
 	};
 	
 	public static final int BASEWIDTH = 25, BASEHEIGHT = 32;
@@ -17,7 +17,8 @@ public abstract class Entity {
 	protected float x, y;
 	protected float speed;
 	protected int width, height;
-	private Level level;
+	protected boolean alive = true;
+	protected Level level;
 	private Rectangle bounds;
 	
 	public Entity(Level level, float x, float y, int width, int height){
@@ -98,6 +99,14 @@ public abstract class Entity {
 	
 	public Level getLevel(){
 		return level;
+	}
+	
+	public boolean isAlive(){
+		return alive;
+	}
+	
+	public void setAlive(boolean alive){
+		this.alive = alive;
 	}
 
 }

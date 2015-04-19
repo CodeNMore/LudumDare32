@@ -75,13 +75,25 @@ public class Level {
 		manager.getPlayer().getInventory().clear();
 		manager.getPlayer().getInventory().addItem(new Flashlight(this, 0, 0));
 		manager.getPlayer().getInventory().addItem(new Lazer(this, 0, 0));
-		manager.getPlayer().getInventory().addItem(new Radio(this, 0, 0));
+		manager.addItem(new Radio(this, 300, 300));
 		
-		manager.addEntity(new Zombie(this, 200, 100));
+		manager.addEntity(new Zombie(this, 170, 100));
+		manager.addEntity(new Zombie(this, 370, 100));
+		manager.addEntity(new Zombie(this, 570, 100));
+		manager.addEntity(new Zombie(this, 770, 100));
+		manager.addItem(new SunItem(this, 500, 500));
 	}
 	
 	public EntityManager getEntityManager(){
 		return manager;
+	}
+	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
 	}
 
 }

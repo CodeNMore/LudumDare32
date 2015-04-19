@@ -115,16 +115,9 @@ thermalimager
   orig: 16, 16
   offset: 0, 0
   index: -1
-energy
-  rotate: false
-  xy: 280, 8
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
 heart
   rotate: false
-  xy: 280, 0
+  xy: 280, 8
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
@@ -136,9 +129,16 @@ post
   orig: 8, 32
   offset: 0, 0
   index: -1
+energy
+  rotate: false
+  xy: 304, 20
+  size: 6, 12
+  orig: 6, 12
+  offset: 0, 0
+  index: -1
 color
   rotate: false
-  xy: 304, 31
+  xy: 280, 7
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
