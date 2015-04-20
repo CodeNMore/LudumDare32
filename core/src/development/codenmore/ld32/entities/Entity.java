@@ -41,6 +41,25 @@ public abstract class Entity {
 		}
 	}
 	
+	public Direction moveEn(float ax, float ay){
+		if(!collision(x + ax, y)){
+			x += ax;
+		}
+		if(!collision(x, y + ay)){
+			y += ay;
+		}
+		
+		if(ax > 0){
+			return Direction.RIGHT;
+		}else if(ax < 0){
+			return Direction.LEFT;
+		}else if(ay < 0){
+			return Direction.DOWN;
+		}else{
+			return Direction.UP;
+		}
+	}
+	
 	public boolean collision(float x, float y){
 		if(level.getTile((int) (x / Tile.TILEWIDTH), (int) (y / Tile.TILEHEIGHT)).isSolid())
 			return true;

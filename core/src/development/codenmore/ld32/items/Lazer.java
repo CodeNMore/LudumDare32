@@ -9,7 +9,6 @@ import development.codenmore.ld32.assets.Assets;
 import development.codenmore.ld32.assets.lighting.LightManager;
 import development.codenmore.ld32.assets.lighting.PointLight;
 import development.codenmore.ld32.entities.Enemy;
-import development.codenmore.ld32.entities.Entity;
 import development.codenmore.ld32.entities.Player;
 import development.codenmore.ld32.level.Level;
 
@@ -25,6 +24,7 @@ public class Lazer extends Item {
 	private PointLight light;
 	private int distance;
 	private boolean canFire = true;
+	private int shotPower = 1;
 	
 	public Lazer(Level level, float x, float y) {
 		super(level, x, y, ITEMWIDTH, ITEMHEIGHT, "LAZER");
@@ -82,13 +82,12 @@ public class Lazer extends Item {
 				break;
 			}
 			//ENTITY COLLISION HURT
-			for(Entity e : level.getEntityManager().getEntities()){
-				if(e instanceof Enemy){
-					if(beamBounds.overlaps(e.getBounds())){
-						((Enemy) e).hurt(1);
-						canFire = false;
-						break;
-					}
+			for(Enemy e : level.getEntityManager().getEnemies()){
+				if(beamBounds.overlaps(e.getBounds())){
+					e.hurt(shotPower);
+					level.getEntityManager().getWaveManager().incScore(50);
+					canFire = false;
+					break;
 				}
 			}
 			

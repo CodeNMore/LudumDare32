@@ -1,6 +1,7 @@
 package development.codenmore.ld32.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,7 +24,7 @@ public class Assets {
 		regions = new ObjectMap<String, TextureRegion>();
 		//LOADS
 		manager.load("font/CodeNFontI.fnt", BitmapFont.class);
-//		manager.load("music/song1.wav", Music.class);
+		manager.load("music/song1.wav", Music.class);
 		manager.load("textures/atlas.pack", TextureAtlas.class);
 	}
 	
@@ -31,6 +32,10 @@ public class Assets {
 		//SETS
 		atlas = manager.get("textures/atlas.pack");
 		font = manager.get("font/CodeNFontI.fnt");
+	}
+	
+	public static Music getMusic(){
+		return manager.get("music/song1.wav");
 	}
 	
 	//HELPERS
@@ -60,6 +65,10 @@ public class Assets {
 	
 	public static void setFontBig(){
 		font.setScale(3.0f);
+	}
+	
+	public static void setFontHuge(){
+		font.setScale(5.0f);
 	}
 	
 	public static void drawString(SpriteBatch batch, String str, float x, float y){

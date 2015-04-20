@@ -3,6 +3,7 @@ package development.codenmore.ld32.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import development.codenmore.ld32.assets.Assets;
 import development.codenmore.ld32.level.GameCamera;
 import development.codenmore.ld32.level.Level;
 
@@ -34,12 +35,14 @@ public class GameState extends State {
 
 	@Override
 	public void onShow() {
-		
+		Assets.getMusic().setLooping(true);
+		Assets.getMusic().play();
 	}
 
 	@Override
 	public void onHide() {
 		GameCamera.reset();
+		Assets.getMusic().stop();
 	}
 
 }

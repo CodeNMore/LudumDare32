@@ -1,24 +1,42 @@
 package development.codenmore.ld32.entities;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
+import development.codenmore.ld32.Main;
+import development.codenmore.ld32.assets.lighting.LightManager;
+import development.codenmore.ld32.assets.lighting.PointLight;
 import development.codenmore.ld32.level.Level;
 import development.codenmore.ld32.level.Node;
 import development.codenmore.ld32.level.tiles.Tile;
 
 public abstract class Enemy extends Entity {
 	
+	private static final int beamWidth = 4;
+	
 	protected Entity target;
 	protected int health;
 	private Array<Node> openNodes, closedNodes;
 	private Node startNode, endNode;
 	private Node[] nodes;
+	protected Direction lastDir;
 	protected Node pathNode;
+	protected float touchAttackDamage;
+	protected float touchAttackedTimer = 0.0f;
+	protected boolean canTouchAttack = true;
+	
+	protected PointLight light;
+	protected int distance;
+	private Rectangle beamBounds;
+	protected float beamAttackWaitTimer = 0.0f, beamAttackWaitTime = 0.0f, beamHurtTimer = 0.0f;
+	private boolean mustAddLight = true;
 
 	public Enemy(Level level, float x, float y, int width, int height) {
 		super(level, x, y, width, height);
 		health = 8;
 		speed = 130;
+		lastDir = Direction.DOWN;
+		touchAttackDamage = 0.1f;
 		target = level.getEntityManager().getPlayer();
 		
 		nodes = new Node[level.getWidth() * level.getHeight()];
@@ -30,6 +48,80 @@ public abstract class Enemy extends Entity {
 		
 		openNodes = new Array<Node>();
 		closedNodes = new Array<Node>();
+	
+		light = new PointLight(x, y, 800, 50);
+		light.setColor(0.0f, 0.0f, 1.0f);
+		distance = Main.WIDTH / 6;
+		beamBounds = new Rectangle(x, y, width, height);
+	}
+	
+	public void beamAttack(float delta){
+		beamAttackWaitTimer += delta;
+		beamHurtTimer += delta;
+		
+		if(beamAttackWaitTimer > beamAttackWaitTime){
+			if (mustAddLight) {
+				light.setPosition(x + width / 2, y + height / 2);
+				LightManager.addLight(light);
+				mustAddLight = false;
+			} else {
+				light.setPosition(x + width / 2, y + height / 2);
+			}
+			
+			
+			
+			switch (lastDir) {
+			case UP:
+				light.setMinMax(beamWidth + 3, beamWidth - 3, -8, distance);
+				beamBounds.width = beamWidth * 2;
+				beamBounds.height = distance;
+				beamBounds.x = light.getX() - beamWidth;
+				beamBounds.y = light.getY() - beamWidth;
+				break;
+			case DOWN:
+				light.setMinMax(beamWidth + 3, beamWidth - 3, distance, -2);
+				beamBounds.width = beamWidth * 2;
+				beamBounds.height = distance;
+				beamBounds.x = light.getX() - beamWidth;
+				beamBounds.y = light.getY() - beamWidth - distance;
+				break;
+			case LEFT:
+				light.setMinMax(distance, -8, beamWidth, beamWidth);
+				beamBounds.height = beamWidth * 2;
+				beamBounds.width = distance;
+				beamBounds.x = light.getX() - beamWidth - distance;
+				beamBounds.y = light.getY() - beamWidth;
+				break;
+			default:// RIGHT
+				light.setMinMax(-2, distance, beamWidth, beamWidth);
+				beamBounds.height = beamWidth * 2;
+				beamBounds.width = distance;
+				beamBounds.x = light.getX() - beamWidth;
+				beamBounds.y = light.getY() - beamWidth;
+				break;
+			}
+			//ENTITY COLLISION HURT
+			if(beamBounds.overlaps(level.getEntityManager().getPlayer().getBounds())){
+				if(beamHurtTimer > 0.5f){
+					level.getEntityManager().getPlayer().hurt(touchAttackDamage);
+					beamHurtTimer = 0.0f;
+				}
+			}
+		}else{
+			if(!mustAddLight){
+				mustAddLight = true;
+				LightManager.removeLight(light);
+				beamAttackWaitTimer = 0.0f;
+			}
+		}
+	}
+	
+	public void onTouchHurt(){
+		if(canTouchAttack){
+			level.getEntityManager().getPlayer().hurt(touchAttackDamage);
+			canTouchAttack = false;
+			touchAttackedTimer = 0.0f;
+		}
 	}
 	
 	public boolean followPath(float delta){
@@ -87,7 +179,7 @@ public abstract class Enemy extends Entity {
 				}
 			}
 		}
-		move(xs, ys);
+		lastDir = moveEn(xs, ys);
 		
 		return ret;
 	}
@@ -222,6 +314,7 @@ public abstract class Enemy extends Entity {
 
 	public void setTarget(Entity target) {
 		this.target = target;
+		findPathToTarget();
 	}
 
 	public int getHealth() {

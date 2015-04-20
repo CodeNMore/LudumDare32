@@ -1,0 +1,16 @@
+Wave
+ 	- enemies increase by 1 or 2
+	- kill enemies faster = more score
+	- spawn items based on score
+		- higher score = better items spawn
+	- every certain amt of levels, lamp turns to buff
+		- do not tell user
+ADD
+	- lamp: heal, energy, speed buffs
+	- item: energy upgrade
+	- item: instant energy
+	- item: health upgrade
+	- item: instant health
+FIX
+	- check if follow path is taking to long
+		- generate another path

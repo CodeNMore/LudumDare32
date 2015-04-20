@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import development.codenmore.ld32.assets.Assets;
 import development.codenmore.ld32.entities.Enemy;
-import development.codenmore.ld32.entities.Entity;
 import development.codenmore.ld32.entities.Player;
 import development.codenmore.ld32.level.Level;
 
@@ -54,24 +53,20 @@ public class Radio extends Item{
 		timer += delta;
 		if(!collectable && timer > lifeTime){
 			alive = false;
-			for(Entity e : level.getEntityManager().getEntities()){
-				if(e instanceof Enemy){
-					if(e.getX() > x - radius && e.getX() < x + radius){
-						if(e.getY() > y - radius && e.getY() < y + radius){
-							((Enemy) e).setTarget(level.getEntityManager().getPlayer());
-						}
+			for(Enemy e : level.getEntityManager().getEnemies()){
+				if(e.getX() > x - radius && e.getX() < x + radius){
+					if(e.getY() > y - radius && e.getY() < y + radius){
+						e.setTarget(level.getEntityManager().getPlayer());
 					}
 				}
 			}
 		}
 		//CODE
 		if(!collectable && alive){
-			for(Entity e : level.getEntityManager().getEntities()){
-				if(e instanceof Enemy){
-					if(e.getX() > x - radius && e.getX() < x + radius){
-						if(e.getY() > y - radius && e.getY() < y + radius){
-							((Enemy) e).setTarget(this);
-						}
+			for(Enemy e : level.getEntityManager().getEnemies()){
+				if(e.getX() > x - radius && e.getX() < x + radius){
+					if(e.getY() > y - radius && e.getY() < y + radius){
+						e.setTarget(this);
 					}
 				}
 			}

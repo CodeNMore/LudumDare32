@@ -64,6 +64,13 @@ public class Player extends Entity {
 				inventory.getCurrentSelectedItem().onNotUsed(this, delta);
 		}
 	}
+	
+	public void hurt(float percentAmt){
+		inventory.getHealthBar().incFillByPercent(-percentAmt);
+		if(inventory.getHealthBar().getFillPercent() <= 0){
+			alive = false;
+		}
+	}
 
 	@Override
 	public void render(SpriteBatch batch) {
