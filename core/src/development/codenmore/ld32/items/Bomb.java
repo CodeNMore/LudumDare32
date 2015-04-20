@@ -13,7 +13,7 @@ import development.codenmore.ld32.level.Level;
 
 public class Bomb extends Item {
 	
-	private static TextureRegion texture = Assets.getRegion("color");
+	private static TextureRegion texture = Assets.getRegion("lazer");
 	
 	private PointLight light;
 	private Rectangle bombBounds;
@@ -71,6 +71,8 @@ public class Bomb extends Item {
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {}
+	public void render(SpriteBatch batch) {
+		batch.draw(texture, x, y, width, height);
+	}
 
 }

@@ -14,7 +14,13 @@ public class Node {
 	}
 	
 	public int getF(Node target){
-		return getG() + getH(target);
+		try{
+			return getG() + getH(target);
+		}catch(Exception e){
+			System.out.println("NODE ERROR");
+			e.printStackTrace();
+			return 1;
+		}
 	}
 	
 	public int getG(){

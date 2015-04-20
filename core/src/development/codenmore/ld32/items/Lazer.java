@@ -38,7 +38,7 @@ public class Lazer extends Item {
 	@Override
 	public void onUse(Player player, Direction action, float delta) {
 		timer += delta;
-		player.getInventory().getEnergyBar().incFillByPercent(-0.1f * delta);
+		player.getInventory().getEnergyBar().incFillByPercent(-0.35f * delta);
 
 		if (timer < waitTime && canFire) {
 			if (mustAdd) {

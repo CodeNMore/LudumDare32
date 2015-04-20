@@ -33,7 +33,7 @@ public abstract class Enemy extends Entity {
 
 	public Enemy(Level level, float x, float y, int width, int height) {
 		super(level, x, y, width, height);
-		health = 8;
+		health = 4;
 		speed = 130;
 		lastDir = Direction.DOWN;
 		touchAttackDamage = 0.1f;
@@ -304,8 +304,10 @@ public abstract class Enemy extends Entity {
 		health -= amt;
 		if(health <= 0){
 			alive = false;
+			if(LightManager.containsLight(light)){
+				LightManager.removeLight(light);
+			}
 		}
-		System.out.println("HURTING ENEMY!");
 	}
 
 	public Entity getTarget() {

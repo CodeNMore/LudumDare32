@@ -178,6 +178,8 @@ public class WaveManager {
 		enemySpawnTimer = 0.0f;
 		inBetweenWaves = false;
 		manager.getEnemies().clear();
+//		manager.getEntities().clear();
+		manager.getItems().clear();
 		// Starting Items
 		manager.getPlayer().getInventory().clear();
 		manager.getPlayer().getInventory()

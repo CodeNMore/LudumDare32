@@ -24,7 +24,7 @@ public class Assets {
 		regions = new ObjectMap<String, TextureRegion>();
 		//LOADS
 		manager.load("font/CodeNFontI.fnt", BitmapFont.class);
-		manager.load("music/song1.wav", Music.class);
+		manager.load("music/song1.mp3", Music.class);
 		manager.load("textures/atlas.pack", TextureAtlas.class);
 	}
 	
@@ -35,7 +35,7 @@ public class Assets {
 	}
 	
 	public static Music getMusic(){
-		return manager.get("music/song1.wav");
+		return manager.get("music/song1.mp3");
 	}
 	
 	//HELPERS

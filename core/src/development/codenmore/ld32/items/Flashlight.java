@@ -29,7 +29,7 @@ public class Flashlight extends Item {
 	
 	@Override
 	public void onUse(Player player, Direction action, float delta){
-		player.getInventory().getEnergyBar().incFillByPercent(-0.1f * delta);
+		player.getInventory().getEnergyBar().incFillByPercent(-0.25f * delta);
 		if(mustAdd){
 			light.setPosition(player.getX() + width / 2, player.getY() + height / 2);
 			LightManager.addLight(light);

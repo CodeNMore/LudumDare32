@@ -12,6 +12,7 @@ import development.codenmore.ld32.assets.Shaders;
 import development.codenmore.ld32.assets.lighting.LightManager;
 import development.codenmore.ld32.entities.EntityManager;
 import development.codenmore.ld32.entities.LightPost;
+import development.codenmore.ld32.items.Bomb;
 import development.codenmore.ld32.level.tiles.Tile;
 import development.codenmore.ld32.utils.Utils;
 import development.codenmore.ld32.utils.Vec2;
@@ -37,6 +38,7 @@ public class Level {
 		}else{
 			if(Gdx.input.isKeyJustPressed(Keys.P)){
 				lost = false;
+				manager.getPlayer().setAlive(true);
 				manager.getWaveManager().reset();
 			}
 		}
@@ -111,7 +113,7 @@ public class Level {
 
 		// TMEP CODE
 		// manager.addItem(new Radio(this, 300, 300));
-		// manager.addItem(new Bomb(this, 350, 300));
+		 manager.addItem(new Bomb(this, 350, 300));
 		// manager.addItem(new ThermalItem(this, 500, 500));
 		// Zombie zl = new Zombie(this, 570, 650);
 		// manager.addEnemy(zl);

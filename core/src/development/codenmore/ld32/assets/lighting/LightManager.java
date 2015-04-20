@@ -50,6 +50,10 @@ public class LightManager {
 		Shaders.world.end();
 	}
 	
+	public static boolean containsLight(PointLight light){
+		return lights.contains(light, true);
+	}
+	
 	public static void reset(){
 		lights.clear();
 	}
